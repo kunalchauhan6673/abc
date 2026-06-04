@@ -38,12 +38,37 @@ void display(Node *p){
  }
  cout<<endl;
 }
-int main(){
- insert(0,12);
- insert(1,11);
- insert(2,10);
- display(head);
- insert(10,01);
- display(head);
+void RemoveDup(Node *ctr){
+  if(head==nullptr){
+    cout<<"The list is empty!";
+    return;
+  }
+  Node *ptr=ctr->next; //forward pointer and ctr is tail pointer
+  while(ptr!=nullptr){
+    if(ctr->data==ptr->data){
+        ctr->next=ptr->next;
+        cout<<"The data deleted is: "<<ptr->data<<endl;
+        delete ptr;
+        ptr = ctr->next;
+    }
+    else{
+        ctr=ptr;
+        ptr=ctr->next;
+    }
+  }
 }
+int main(){
+ insert(0,10);
+ insert(1,10);
+ insert(2,30);
+ insert(3,30);
+ insert(4,50);
+ insert(5,60);
+ insert(6,70);
+ display(head);
+ RemoveDup(head);
+ display(head);
+ return 0;
+}
+
 
