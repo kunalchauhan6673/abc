@@ -88,6 +88,51 @@ void insertAtpos(int pos, int data){
   }
  }
 }
+int deleteFrompos(int pos){
+    if(first==nullptr){
+        cout<<"Link list is empty"<<endl;
+        return -1;
+    }
+    if(pos<0||pos>=countNodes()){
+        cout<<"invalid position"<<endl;
+        return -1;
+    }
+    else{
+        int key;
+        if(pos==0){
+            if(first==last){
+                key=first->data;
+                delete first;
+                first=last=nullptr;
+                return key;
+            }
+            key=first->data;
+            Node *ptr=first;
+            first=ptr->next;
+            first->prev=nullptr;
+            delete ptr;
+            return key;
+        }
+        else{
+
+            Node *ptr=first;
+            for(int i=0;i<pos-1;i++){
+                ptr=ptr->next;
+            }
+            Node *del=ptr->next;
+            key=del->data;
+            ptr->next=del->next;
+
+            if(del->next){
+               del->next->prev=ptr;
+            }else{
+               last=ptr;
+            }
+            delete del;
+            return key;
+        }
+    }
+}
 int main(){
  int a[]={1,2,3,4,5};
  create(a,5);
@@ -96,6 +141,11 @@ int main(){
  display();
  insertAtpos(4,70);
  display();
- insertAtpos(7,100);
+ cout<<"Deleted: "<<deleteFrompos(0)<<endl;
+ display();
+ cout<<"Deleted: "<<deleteFrompos(3)<<endl;
+ display();
+ cout<<"Deleted: "<<deleteFrompos(4)<<endl;
  display();
 }
+// index are from 0 so keep that in mind!
