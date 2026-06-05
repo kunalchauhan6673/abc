@@ -43,10 +43,11 @@ void display(){
 
 // 3. Count
 int countNodes(){
- if(ptr==nullptr){
+ if(head==nullptr){
     return 0;
  }
  int c=0;
+ Node *ptr=head;
  do{
      c++;
      ptr=ptr->next;
@@ -86,6 +87,10 @@ void insertAtpos(int pos,int data){
     for(int i=0;i<pos-1;i++){
         ptr=ptr->next;
     }
+    if(ptr == last){
+       // if insertion at last
+       last = t;
+    }
     t->next=ptr->next;
     ptr->next=t;
     }
@@ -93,10 +98,49 @@ void insertAtpos(int pos,int data){
 }
 
 // 5. delete from a position
-void deleteFrompos(int pos)
+int deleteFrompos(int pos)
 {
   if(head==nullptr){
+   cout<<"The linklist is empty"<<endl;
+   return -1;
+  }
+  if(pos<0||pos>=countNodes()){
+   cout<<"Invalid pos!"<<endl;
+   return -1;
+  }
+  else{
+  int key;
+  if(pos==0){
+    if(head==last){
+        // if that node is the only node
+        key=head->data;
+        delete head;
+        head=last=nullptr;
+        return key;
+    }
+    Node *ptr=head;
+    key=ptr->data;
+    head=ptr->next;
+    last->next=head;
+    delete ptr;
+    return key;
+  }
+  else{
+    Node *ptr=head;
+    for(int i=0;i<pos-1;i++){
+        ptr=ptr->next;
+    }
+    Node *del=ptr->next;
+    key=del->data;
 
+    if(del==last){
+        // if that node is the last
+        last=ptr;
+    }
+    ptr->next=del->next;
+    delete del;
+    return key;
+  }
   }
 }
 int main(){
@@ -106,6 +150,8 @@ int main(){
  insertAtpos(0,100);
  insertAtpos(3,10);
  insertAtpos(6,1000);
+ display();
+ cout<<"The Element popped is: "<<deleteFrompos(1)<<endl;
  display();
  return 0;
 }
