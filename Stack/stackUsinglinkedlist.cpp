@@ -41,6 +41,7 @@ class Stack{
     int data = top->data;
     top=top->next;
     delete t;
+    return data;
     }
     void display(){
     if(isEmpty()){
